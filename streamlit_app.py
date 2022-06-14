@@ -274,14 +274,14 @@ best_image = uploaded_image
 
 image_config = {
         'saturation': 1.0,
-        'crop': [0.0, 0.0, 1.0, 1.0],
+        'crop': [0.0, 0.0, 0.0, 0.0],
         'brightness': 1.0,
         'contrast': 1.0,
         'hue': 0.0,
         }
 
 val_range = {
-    'crop': (0.0, 1.0),
+    'crop': (0.0, 0.25),
     }
 
 # pillow operations
@@ -300,8 +300,8 @@ def crop_image(image, crop_coords):
     image_height = image.size[1]
     left = int(left * image_width)
     top = int(top * image_height)
-    right = int(right * image_width)
-    bottom = int(bottom * image_height)
+    right = int((1 - right) * image_width)
+    bottom = int((1 - bottom) * image_height)
     return image.crop((left, top, right, bottom))
 
 
@@ -337,7 +337,7 @@ def clip_vals(val, key):
 
 import numpy as np
 def get_new_change_config(image_config):
-    var = 0.03
+    var = 0.1
     for key in image_config:
         # gaussian noise
         if type(image_config[key]) == list:
