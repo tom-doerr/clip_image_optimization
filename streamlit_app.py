@@ -207,6 +207,8 @@ log_page_load()
 
 server_url_custom = st.sidebar.text_input('Server URL', placeholder='Custom URL, leave blank to use default')
 st.sidebar.markdown('---')
+num_iterations_no_improvement_stop = st.sidebar.number_input('Stop after no improvement for', value=100, min_value=1)
+st.sidebar.markdown('---')
 metrics = show_sidebar_metrics()
 st.sidebar.markdown('---')
 custom_metric = get_custom_metric()
@@ -382,6 +384,7 @@ if False:
 
 
 best_score = 0
+num_iterations_no_improvement = 0
 best_scores = []
 scores_plot = st.empty()
 while True:
@@ -410,6 +413,9 @@ while True:
         best_scores.append((time.time(), scores))
         best_image = current_image
         image_config = new_change_config
+        num_iterations_no_improvement = 0
+    else:
+        num_iterations_no_improvement += 1
 
         # plot_scores(best_scores, scores_plot)
 
@@ -419,7 +425,18 @@ while True:
     current_image_streamlit.image(current_image, use_column_width=True)
     best_image_text.write(f'Best image (score {best_score:.3f}):')
     best_image_streamlit.image(best_image, use_column_width=True)
-    # st.stop()
+    if num_iterations_no_improvement > num_iterations_no_improvement_stop:
+        break
+
+
+current_version_text.empty()
+current_image_streamlit.empty()
+
+st.write('Finished optimization!')
+st.balloons()
+
+
+
 
 
 
