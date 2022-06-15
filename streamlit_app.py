@@ -282,6 +282,8 @@ image_config = {
 
 val_range = {
     'crop': (0.0, 0.25),
+    'brightness': (0.3, 2.0),
+    'contrast': (0.3, 2.0),
     }
 
 # pillow operations
