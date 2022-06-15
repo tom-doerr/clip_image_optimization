@@ -363,19 +363,20 @@ def apply_change_config(image, image_config):
     return image_copy
 
 
-import datetime
-from plotly import graph_objects as go
-def plot_scores(scores, scores_plot):
-    unix_times = [x[0] for x in scores]
-    scores = [x[1] for x in scores]
-    print("scores:", scores)
-    datetimes = [datetime.datetime.fromtimestamp(x) for x in unix_times]
-    print("datetimes:", datetimes)
-    # plot in streamlit
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=datetimes, y=scores, name='scores', mode='lines+markers'))
-    scores_plot.plotly_chart(fig, use_container_width=True)
-    # st.plotly_chart(fig, use_container_width=True)
+if False:
+    import datetime
+    from plotly import graph_objects as go
+    def plot_scores(scores, scores_plot):
+        unix_times = [x[0] for x in scores]
+        scores = [x[1] for x in scores]
+        print("scores:", scores)
+        datetimes = [datetime.datetime.fromtimestamp(x) for x in unix_times]
+        print("datetimes:", datetimes)
+        # plot in streamlit
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=datetimes, y=scores, name='scores', mode='lines+markers'))
+        scores_plot.plotly_chart(fig, use_container_width=True)
+        # st.plotly_chart(fig, use_container_width=True)
 
 
 
@@ -410,7 +411,7 @@ while True:
         best_image = current_image
         image_config = new_change_config
 
-        plot_scores(best_scores, scores_plot)
+        # plot_scores(best_scores, scores_plot)
 
     print("scores:", scores)
     score = scores['Avg']
