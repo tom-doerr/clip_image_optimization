@@ -1,6 +1,12 @@
 import streamlit as st
-import cv2
+st.set_page_config(page_title='AI Image Optimizer', initial_sidebar_state="auto")
+
+st.title('AI Image Optimizer')
+
 import time
+loading_start = time.time()
+
+import cv2
 import os
 from clip_client import Client
 from docarray import Document
@@ -8,9 +14,8 @@ import PIL
 import grpc
 import jina
 
-st.set_page_config(page_title='AI Image Optimizer', initial_sidebar_state="auto")
+print(f'Loading libraries took {time.time() - loading_start} seconds.')
 
-st.title('AI Image Optimizer')
 
 uploaded_image = st.file_uploader("Upload a image file", type=["jpg", "png", "jpeg"])
 
