@@ -176,8 +176,8 @@ def show_sidebar_metrics():
     metric_options = list(METRIC_TEXTS.keys())
     # default_metrics = ['Attractivness', 'Trustworthiness', 'Intelligence'] 
     # default_metrics = ['Hotness']
-    # default_metrics = ['Quality']
-    default_metrics = ['Attractivness']
+    default_metrics = ['Quality']
+    # default_metrics = ['Attractivness']
     st.sidebar.title('Metrics')
     # metric = st.sidebar.selectbox('Select a metric', metric_options)
     selected_metrics = []
