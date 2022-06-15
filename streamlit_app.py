@@ -206,9 +206,6 @@ def get_custom_metric():
 log_page_load()
 
 server_url_custom = st.sidebar.text_input('Server URL', placeholder='Custom URL, leave blank to use default')
-step_size = st.sidebar.number_input('Step size', value=10, min_value=1)
-number_best_images_to_show = int(st.sidebar.number_input('Number of best images to show', value=100, min_value=1))
-# fps = st.sidebar.number_input('FPS', value=10)
 st.sidebar.markdown('---')
 metrics = show_sidebar_metrics()
 st.sidebar.markdown('---')
@@ -427,40 +424,4 @@ while True:
 
 
 
-
-# images = video_to_frames(video_filename)
-frames_generator = video_to_frames_generator(video_filename)
-current_frame_score_field = st.empty()
-current_image = st.empty()
-best_frame_score_field = st.empty()
-best_image = st.empty()
-filename_scores = []
-time_last_frame = 0
-for i, (image, success_loading_image) in enumerate(frames_generator):
-    if not success_loading_image:
-        st.write('Done processing video')
-        break
-
-    if i % step_size == 0:
-        filename_path, scores = process_image(image, metrics)
-        score = scores['Avg']
-        current_frame_score_field.write(f'Current frame (frame {i}, {score:.3f}):')
-        filename_scores.append((filename_path, scores))
-        filename_scores.sort(key=lambda x: x[1]['Avg'], reverse=True)
-        best_score = filename_scores[0][1]['Avg']
-        best_frame_score_field.write(f'Best frame (score {best_score:.3f}):')
-        best_image.image(filename_scores[0][0])
-
-
-    # if (time.time() - time_last_frame) > 1 / fps or i % step_size == 0:
-        image_other_colors = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        current_image.image(image_other_colors)
-        time_last_frame = time.time()
-
-
-# show the best images
-st.title('Best images')
-print("number_best_images_to_show:", number_best_images_to_show)
-for filename_path, scores in filename_scores[:number_best_images_to_show]:
-    st.image(filename_path, use_column_width=True, caption=f'Score: {scores["Avg"]:.3f}')
 
