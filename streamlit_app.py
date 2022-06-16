@@ -394,12 +394,10 @@ best_score = 0
 num_iterations_no_improvement = 0
 best_scores = []
 scores_plot = st.empty()
+new_change_config = copy.deepcopy(image_config)
 while True:
     # new_change_config = get_new_change_config(image_config)
     # deep copy:
-    new_change_config = copy.deepcopy(image_config)
-    print("image_config:", image_config)
-    new_change_config = get_new_change_config(new_change_config)
 
     print("new_change_config:", new_change_config)
     try:
@@ -434,6 +432,10 @@ while True:
     best_image_streamlit.image(best_image, use_column_width=True)
     if num_iterations_no_improvement > num_iterations_no_improvement_stop:
         break
+
+    new_change_config = copy.deepcopy(image_config)
+    print("image_config:", image_config)
+    new_change_config = get_new_change_config(new_change_config)
 
 
 current_version_text.empty()
