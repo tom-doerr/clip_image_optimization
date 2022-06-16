@@ -278,13 +278,14 @@ best_image = uploaded_image
 
 image_config = {
         'saturation': 1.0,
+        'degree': 0.0,
         'crop': [0.0, 0.0, 0.0, 0.0],
         'brightness': 1.0,
         'contrast': 1.0,
-        'hue': 0.0,
         }
 
 val_range = {
+    'degree': (-2, 2),
     'crop': (0.0, 0.25),
     'brightness': (0.3, 2.0),
     'contrast': (0.3, 2.0),
@@ -319,16 +320,17 @@ def adjust_contrast(image, contrast):
     enhancer = ImageEnhance.Contrast(image)
     return enhancer.enhance(contrast)
 
-def apply_hue_rotation(image, hue):
-    return image.rotate(hue)
+def apply_rotation(image, degree):
+    degree *= 36
+    return image.rotate(degree)
 
 
 change_operations = {
         'saturation': change_saturation,
+        'degree': apply_rotation,
         'crop': crop_image,
         'brightness': adjust_brightness,
         'contrast': adjust_contrast,
-        'hue': apply_hue_rotation,
         }
 
 
